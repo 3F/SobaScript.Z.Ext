@@ -62,4 +62,9 @@
     <EmbeddedResource Include="NuGet\gnt.bat" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\SobaScript.Mapper\SobaScript.Mapper\SobaScript.Mapper.csproj" />
+    <ProjectReference Include="..\SobaScript\SobaScript\SobaScript.csproj" />
+  </ItemGroup>
+
 </Project>
