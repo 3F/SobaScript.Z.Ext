@@ -17,6 +17,92 @@
     <Title>Core components for SobaScript</Title>
     <Description>Extended Core components for SobaScript -- Extensible Modular Scripting Programming Language
     
+    https://github.com/3F/SobaScript
+
+    Provides at least the following:
+    
+    * SevenZipComponent
+
+    ```
+    #[7z pack.files({"IntelOCL.log", "IntelChipset.log"}, "ilog.7z")]
+    #[7z pack.files({"IntelAMT.log"}, "P:\s01\log.xml"}, "D:\output.zip", Zip, Deflate, 2)]
+    #[7z pack.files(
+        {
+            "bin\gpp.exe", 
+            "bin\lib\*.dll"
+        },
+        "gpp.7z", 
+        {"bin\lib\stub.dll"}, 
+        SevenZip, Lzma2, 4
+    )]
+    ```
+
+    ```
+    #[7z pack.directory("bin", "release.zip")]
+    #[7z pack.directory("D:\log", "log.7z", SevenZip, Lzma2, 4)]
+    ```
+
+    ```
+    #[( !#[7z check("arch.tar.xz")] ){
+        #[Build cancel = true]
+    }]
+
+    #[var arch = #[7z check("arch.tar.xz", "pass-123")]]
+    ```
+
+    ```
+    #[7z unpack("release.7z", true)]
+    #[7z unpack("xscale.zip", "D:\app\xscale", false, "pass-123")]
+    ```
+
+    * NuGetComponent
+
+    Through [GetNuTool](https://github.com/3F/GetNuTool).
+
+    ```
+    #[NuGet gnt.raw("/p:ngpackages=\"7z.Libs/19.0.1;vsSBE.CI.MSBuild/1.6.12011:../packages/CI.MSBuild\"")]
+    #[NuGet gnt.raw("/t:pack /p:ngin=\"D:\tmp\7z.Libs\" /p:ngout=\"newdir/\"")]
+    ```
+
+    * FileComponent
+
+    I/O local and remote operations.
+
+    ```
+    #[File replace.Regex("file.log", "(\d+)", "~@1~")]
+    #[( #[IO exists.directory("D:\tmp\log")] ){
+      ...
+    }]
+    ```
+
+    ```
+    #[IO copy.file("bin\release.7z", "@(out)dep\release.7z", true)]
+    #[IO copy.file("D:\inc\*.h", "@(SolutionDir)inc/", false, {"ui.core.h", "http.h"})]
+    #[File appendLine("in.log"): mixed data]
+    ```
+
+    ```
+    #[IO copy.file({
+                        "bin\client.zip", 
+                        "bin\server\*.*"
+                  }, 
+                  "@(plugin)\beta", 
+                  true, 
+                  { 
+                        "*debug*",
+                        "*.pdb"
+                  })]
+    ```
+
+    ```
+    #[IO copy.directory("bin", "@(out)dep/mixed", true)]
+
+    #[IO remote.download("ftp://192.168.17.04:2021/dir1/non-api.png", "non-api.png", "usr", "pwd")]
+    #[IO remote.download("http://example.com", "example.com.html")]
+    ```
+
+    ...
+
     https://github.com/3F/SobaScript.Z.Ext
 
     =======================================
