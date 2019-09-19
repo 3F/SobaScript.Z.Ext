@@ -60,7 +60,7 @@ namespace net.r_eg.SobaScript.Z.Ext.NuGet
 
             data = Regex.Replace
             (
-                data, 
+                FixOldRev(ref data), 
                 @"(?'left'
                    \/p(?:roperty)?
                     \s*?:\s*?
@@ -114,6 +114,14 @@ namespace net.r_eg.SobaScript.Z.Ext.NuGet
 
             return src;
         }
+
+        private string FixOldRev(ref string str) => Regex.Replace
+        (
+            str,
+            @"^\s*gnt\.(?:core|bat|cmd)(\s|\/)", 
+            "$1", 
+            RegexOptions.IgnoreCase
+        );
 
         private string Locate(string item = null)
         {
